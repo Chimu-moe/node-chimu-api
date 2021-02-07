@@ -1,6 +1,6 @@
 {
   "name": "@chimumoe/api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Chimu's API Wrapper written in NodeJS used for basically every third-party application that is written in NodeJS",
   "main": "dist/lib.js",
   "repository": "https://github.com/chimu-moe/node-chimu-api",
