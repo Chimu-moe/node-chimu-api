@@ -1,10 +1,10 @@
 import fetch from "node-fetch";
 
 export enum PlayMode {
-    Osu = -2,
-    Taiko = -2,
-    CatchTheBeat = -2,
-    Mania = -2,
+    Osu = 0,
+    Taiko = 1,
+    CatchTheBeat = 2,
+    Mania = 3,
 }
 
 export enum RankedStatus {
