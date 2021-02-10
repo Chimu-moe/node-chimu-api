@@ -4,8 +4,9 @@ NodeJS Wrapper for Chimu API
 
 Example:
 
-```js
-const ChimuAPI = require('@chimumoe/api');
+```ts
+import ChimuAPI from "@chimumoe/api";
+
 
 const api = new ChimuAPI;
 
