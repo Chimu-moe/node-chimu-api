@@ -49,7 +49,7 @@ export interface SeachOptions {
     query?: string;
     amount?: number;
     offset?: number;
-    rankedStatus?: RankedStatus;
+    status?: RankedStatus;
     mode?: PlayMode;
 
     min_ar?: number;
