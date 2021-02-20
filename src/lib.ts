@@ -45,7 +45,7 @@ export enum Language {
     Italian = 11
 }
 
-export interface SeachOptions {
+export interface SearchOptions {
     query?: string;
     amount?: number;
     offset?: number;
@@ -130,46 +130,42 @@ export interface Result<T> {
 }
 
 export default class ChimuAPI {
+    URL = 'https://api.chimu.moe/v1/';
+
     /**
      * Gets a beatmap from chimu's API
      */
     async getMap(mapId: number): Promise<Result<Beatmap>> {
-        return (await fetch('https://api.chimu.moe/v1/map/' + mapId)).json();
+        return (await fetch(`${this.URL}/map/${mapId}`)).json();
     }
 
     /**
      * Gets a beatmap from chimu's API
      */
     async getSet(setId: number): Promise<Result<BeatmapSet>> {
-        return (await fetch('https://api.chimu.moe/v1/set/' + setId)).json();
+        return (await fetch(`${this.URL}/set/${setId}`)).json();
     }
 
     /**
     * Search for a Beatmap
     */
-    async search(opts: SeachOptions) {
-        let httpQuery = "";
+   async search(opts: SearchOptions) {
+        let httpQuery = '';
 
         // Query builder
-        for (var key in opts) {
-            let value = opts[key];
+        for (const [key, value] of Object.entries(opts)) {
+            if (value === null || value === false || value === undefined) continue;
 
-            if (value === null || value === NaN || value === false || value === undefined)
-                continue;
-
-            if (httpQuery.length > 0)
-                httpQuery += `&${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-            else
-                httpQuery += `?${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+            if (httpQuery.length > 0) httpQuery += `&${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+            else httpQuery += `?${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
         }
-
-        return (await fetch(`https://api.chimu.moe/v1/search${httpQuery}`)).json();
+        return (await fetch(`${this.URL}search${httpQuery}`)).json();
     }
 
     /**
     * Download a Beatmap
     */
     async download(setId: number, key: string, state: "hcaptcha" | "access"): Promise<Result<{}> | Buffer> {
-        return (await fetch(`https://api.chimu.moe/v1/download/${setId}?k=${key}&s=${state}`)).json();
+        return (await fetch(`${this.URL}/download/${setId}?k=${key}&s=${state}`)).json();
     }
 }
