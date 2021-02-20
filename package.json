@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "Chimu's API Wrapper written in NodeJS used for basically every third-party application that is written in NodeJS",
   "main": "dist/lib.js",
+  "types": "dist/lib.d.ts",
   "repository": "https://github.com/chimu-moe/node-chimu-api",
   "author": "Robin A. P. <me@mempler.de>",
   "license": "unlicense",
