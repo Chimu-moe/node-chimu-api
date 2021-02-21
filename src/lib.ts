@@ -136,14 +136,14 @@ export default class ChimuAPI {
      * Gets a beatmap from chimu's API
      */
     async getMap(mapId: number): Promise<Result<Beatmap>> {
-        return (await fetch(`${this.URL}/map/${mapId}`)).json();
+        return (await fetch(`${this.URL}map/${mapId}`)).json();
     }
 
     /**
      * Gets a beatmap from chimu's API
      */
     async getSet(setId: number): Promise<Result<BeatmapSet>> {
-        return (await fetch(`${this.URL}/set/${setId}`)).json();
+        return (await fetch(`${this.URL}set/${setId}`)).json();
     }
 
     /**
@@ -166,6 +166,15 @@ export default class ChimuAPI {
     * Download a Beatmap
     */
     async download(setId: number, key: string, state: "hcaptcha" | "access"): Promise<Result<{}> | Buffer> {
-        return (await fetch(`${this.URL}/download/${setId}?k=${key}&s=${state}`)).json();
+        let data = await fetch(`${this.URL}download/${setId}?k=${key}&s=${state}&n=0`);
+        const contentType = data.headers.get('content-type');
+        if (contentType === "application/zip") {
+            return data.buffer();
+        }
+        if (contentType === "application/json") {
+            return data.json()
+        }
+
+        return null;
     }
 }
