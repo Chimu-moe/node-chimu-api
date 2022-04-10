@@ -49,8 +49,8 @@ export interface SearchOptions {
     query?: string;
     amount?: number;
     offset?: number;
-    status?: RankedStatus;
-    mode?: PlayMode;
+    status?: RankedStatus[];
+    mode?: PlayMode[];
 
     min_ar?: number;
     max_ar?: number
@@ -155,9 +155,20 @@ export default class ChimuAPI {
         // Query builder
         for (const [key, value] of Object.entries(opts)) {
             if (value === null || value === false || value === undefined) continue;
+                
+            let outputValue = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+            if (Array.isArray(value)) {
+                outputValue = "";
+                for (const element of value) {
+                    outputValue += `${encodeURIComponent(key)}=${encodeURIComponent(element)}&`
+                }
+            }
 
-            if (httpQuery.length > 0) httpQuery += `&${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-            else httpQuery += `?${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+            if (httpQuery.length > 0) {
+                httpQuery += `&${outputValue}`;
+            } else {
+                httpQuery += `?${outputValue}`;
+            } 
         }
         return (await fetch(`${this.URL}search${httpQuery}`)).json();
     }
